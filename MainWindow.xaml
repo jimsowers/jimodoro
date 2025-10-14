@@ -1,0 +1,231 @@
+<Window x:Class="Jimodoro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Jimodoro - Pomodoro Timer" 
+        Height="600" 
+        Width="450"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}"
+        FontFamily="Segoe UI">
+    
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,40">
+            <TextBlock Text="JIMODORO" 
+                      FontSize="32" 
+                      FontWeight="Bold" 
+                      Foreground="{StaticResource PrimaryBrush}" 
+                      HorizontalAlignment="Center"/>
+            <TextBlock Text="Pomodoro Timer" 
+                      FontSize="14" 
+                      Foreground="{StaticResource MutedTextBrush}" 
+                      HorizontalAlignment="Center"
+                      Margin="0,5,0,0"/>
+        </StackPanel>
+        
+        <!-- Timer Display -->
+        <Border Grid.Row="1" 
+                Background="{StaticResource SurfaceBrush}"
+                CornerRadius="20"
+                Padding="40">
+            <Border.Effect>
+                <DropShadowEffect Color="#E2E8F0" 
+                                Direction="270" 
+                                ShadowDepth="2" 
+                                BlurRadius="10" 
+                                Opacity="0.3"/>
+            </Border.Effect>
+            
+            <StackPanel>
+                <!-- Status Text -->
+                <TextBlock x:Name="StatusText" 
+                          Text="{Binding StateDisplayText, Mode=OneWay}"
+                          Style="{StaticResource StatusTextStyle}"
+                          Margin="0,0,0,20"
+                          Foreground="{StaticResource AccentBrush}"/>
+                
+                <!-- Timer -->
+                <TextBlock x:Name="TimerDisplay" 
+                          Text="{Binding DisplayTime, Mode=OneWay}"
+                          Style="{StaticResource TimerTextStyle}"
+                          Margin="0,0,0,20"/>
+                
+                <!-- Progress Bar -->
+                <ProgressBar x:Name="ProgressBar"
+                           Value="{Binding ProgressPercentage, Mode=OneWay}"
+                           Height="8"
+                           Background="#E2E8F0"
+                           Foreground="{StaticResource AccentBrush}"
+                           BorderThickness="0"
+                           Margin="0,0,0,20">
+                    <ProgressBar.Template>
+                        <ControlTemplate TargetType="ProgressBar">
+                            <Border Background="{TemplateBinding Background}" 
+                                  CornerRadius="4">
+                                <Grid>
+                                    <Rectangle x:Name="PART_Track" 
+                                             Fill="{TemplateBinding Background}"
+                                             RadiusX="4" 
+                                             RadiusY="4"/>
+                                    <Rectangle x:Name="PART_Indicator" 
+                                             Fill="{TemplateBinding Foreground}"
+                                             RadiusX="4" 
+                                             RadiusY="4"
+                                             HorizontalAlignment="Left"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </ProgressBar.Template>
+                </ProgressBar>
+                
+                <!-- Completed Pomodoros -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Completed:" 
+                              FontSize="14" 
+                              Foreground="{StaticResource MutedTextBrush}"
+                              VerticalAlignment="Center"/>
+                    <TextBlock x:Name="CompletedCountText" 
+                              Text="{Binding CompletedPomodoros, Mode=OneWay}"
+                              FontSize="18" 
+                              FontWeight="SemiBold"
+                              Foreground="{StaticResource AccentBrush}"
+                              Margin="8,0,0,0"
+                              VerticalAlignment="Center"/>
+                    <TextBlock Text="🍅" 
+                              FontSize="16"
+                              Margin="5,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        
+        <!-- Control Buttons -->
+        <StackPanel Grid.Row="2" 
+                   Orientation="Horizontal" 
+                   HorizontalAlignment="Center"
+                   Margin="0,30,0,0">
+            <Button x:Name="StartPauseButton" 
+                   Content="{Binding PlayPauseText, Mode=OneWay}"
+                   Style="{StaticResource ModernButtonStyle}"
+                   Click="StartPauseButton_Click"
+                   MinWidth="100"
+                   Margin="0,0,10,0"/>
+            
+            <Button x:Name="StopButton" 
+                   Content="Stop"
+                   Style="{StaticResource ModernButtonStyle}"
+                   Click="StopButton_Click"
+                   MinWidth="80"
+                   Margin="0,0,10,0">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource SecondaryColor}"/>
+                </Button.Background>
+            </Button>
+            
+            <Button x:Name="SkipButton" 
+                   Content="Skip"
+                   Style="{StaticResource ModernButtonStyle}"
+                   Click="SkipButton_Click"
+                   MinWidth="80">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource MutedTextColor}"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        
+        <!-- Settings -->
+        <Expander Grid.Row="3" 
+                 Header="Settings" 
+                 Margin="0,30,0,0"
+                 FontWeight="SemiBold"
+                 Foreground="{StaticResource TextBrush}">
+            <Grid Margin="0,15,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Work Duration -->
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                          Text="Work Duration:" 
+                          VerticalAlignment="Center"
+                          Foreground="{StaticResource TextBrush}"/>
+                <Slider Grid.Row="0" Grid.Column="1" 
+                       x:Name="WorkDurationSlider"
+                       Minimum="15" Maximum="60" 
+                       Value="25"
+                       Width="120"
+                       Margin="10,0"
+                       ValueChanged="WorkDurationSlider_ValueChanged"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" 
+                          Text="{Binding ElementName=WorkDurationSlider, Path=Value, StringFormat={}{0:0} min}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Foreground="{StaticResource MutedTextBrush}"/>
+                
+                <!-- Short Break Duration -->
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                          Text="Short Break:" 
+                          VerticalAlignment="Center"
+                          Margin="0,10,0,0"
+                          Foreground="{StaticResource TextBrush}"/>
+                <Slider Grid.Row="1" Grid.Column="1" 
+                       x:Name="ShortBreakSlider"
+                       Minimum="3" Maximum="15" 
+                       Value="5"
+                       Width="120"
+                       Margin="10,10,10,0"
+                       ValueChanged="ShortBreakSlider_ValueChanged"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" 
+                          Text="{Binding ElementName=ShortBreakSlider, Path=Value, StringFormat={}{0:0} min}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Margin="0,10,0,0"
+                          Foreground="{StaticResource MutedTextBrush}"/>
+                
+                <!-- Long Break Duration -->
+                <TextBlock Grid.Row="2" Grid.Column="0" 
+                          Text="Long Break:" 
+                          VerticalAlignment="Center"
+                          Margin="0,10,0,0"
+                          Foreground="{StaticResource TextBrush}"/>
+                <Slider Grid.Row="2" Grid.Column="1" 
+                       x:Name="LongBreakSlider"
+                       Minimum="10" Maximum="30" 
+                       Value="15"
+                       Width="120"
+                       Margin="10,10,10,0"
+                       ValueChanged="LongBreakSlider_ValueChanged"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" 
+                          Text="{Binding ElementName=LongBreakSlider, Path=Value, StringFormat={}{0:0} min}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Margin="0,10,0,0"
+                          Foreground="{StaticResource MutedTextBrush}"/>
+            </Grid>
+        </Expander>
+        
+        <!-- Footer -->
+        <TextBlock Grid.Row="4" 
+                  Text="Stay focused and productive! 🎯"
+                  FontSize="12"
+                  Foreground="{StaticResource MutedTextBrush}"
+                  HorizontalAlignment="Center"
+                  Margin="0,20,0,0"/>
+    </Grid>
+</Window>
