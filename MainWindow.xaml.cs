@@ -53,27 +53,51 @@ namespace Jimodoro
             _pomodoroTimer.Skip();
         }
 
-        private void WorkDurationSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void WorkDurationTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (_pomodoroTimer != null)
+            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
             {
-                _pomodoroTimer.WorkDuration = (int)e.NewValue;
+                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 120)
+                {
+                    _pomodoroTimer.WorkDuration = value;
+                    textBox.Background = new SolidColorBrush(Colors.White);
+                }
+                else if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
+                }
             }
         }
 
-        private void ShortBreakSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ShortBreakTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (_pomodoroTimer != null)
+            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
             {
-                _pomodoroTimer.ShortBreakDuration = (int)e.NewValue;
+                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 60)
+                {
+                    _pomodoroTimer.ShortBreakDuration = value;
+                    textBox.Background = new SolidColorBrush(Colors.White);
+                }
+                else if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
+                }
             }
         }
 
-        private void LongBreakSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void LongBreakTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (_pomodoroTimer != null)
+            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
             {
-                _pomodoroTimer.LongBreakDuration = (int)e.NewValue;
+                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 120)
+                {
+                    _pomodoroTimer.LongBreakDuration = value;
+                    textBox.Background = new SolidColorBrush(Colors.White);
+                }
+                else if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
+                }
             }
         }
 
@@ -101,7 +125,7 @@ namespace Jimodoro
             var originalBrush = Background;
             
             // Flash with accent color
-            Background = new SolidColorBrush(Color.FromRgb(72, 187, 120)); // AccentColor
+            Background = new SolidColorBrush(Color.FromRgb(249, 115, 22)); // AccentColor (Orange)
             
             // Create a timer to restore original background
             var flashTimer = new System.Windows.Threading.DispatcherTimer();

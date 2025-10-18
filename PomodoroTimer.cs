@@ -261,12 +261,25 @@ namespace Jimodoro
         {
             try
             {
-                // Play system notification sound
-                SystemSounds.Exclamation.Play();
+                // Play multiple system sounds for better notification
+                SystemSounds.Asterisk.Play();
+                System.Threading.Thread.Sleep(100);
+                SystemSounds.Asterisk.Play();
             }
             catch
             {
                 // Silently fail if sound cannot be played
+                try
+                {
+                    // Fallback to beep if system sounds fail
+                    Console.Beep(800, 200);
+                    System.Threading.Thread.Sleep(100);
+                    Console.Beep(800, 200);
+                }
+                catch
+                {
+                    // Complete fallback - do nothing
+                }
             }
         }
 
