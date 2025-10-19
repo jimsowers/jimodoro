@@ -41,7 +41,8 @@ namespace ThniksTimer
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            TryEnableImmersiveDarkTitleBar();
+            // Force immersive dark title bar regardless of system theme
+            TryEnableImmersiveDarkTitleBar(forceDark:true);
             TrySetRoundedCorners();
         }
 
@@ -63,6 +64,45 @@ namespace ThniksTimer
         private void SkipButton_Click(object sender, RoutedEventArgs e)
         {
             _pomodoroTimer.Skip();
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void MaxRestore_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left) return;
+
+            if (e.ClickCount == 2)
+            {
+                // toggle maximize/restore
+                MaxRestore_Click(sender, new RoutedEventArgs());
+                return;
+            }
+
+            try
+            {
+                DragMove();
+            }
+            catch
+            {
+                // ignore
+            }
         }
 
         // Prevent non-numeric characters from being entered
@@ -253,7 +293,8 @@ namespace ThniksTimer
 
         // Enable Windows 11 dark title bar (immersive dark mode).
         // Uses DWM attributes: value 20 on 1903+, fallback to 19 for 1809.
-        private void TryEnableImmersiveDarkTitleBar()
+        // Try to enable immersive dark title bar. If forceDark is true, set the DWM attribute to dark mode
+        private void TryEnableImmersiveDarkTitleBar(bool forceDark = false)
         {
             try
             {
@@ -261,11 +302,11 @@ namespace ThniksTimer
                 if (hwnd == IntPtr.Zero)
                     return;
 
-                int trueValue = 1;
-                // Try modern value
-                DwmSetWindowAttribute(hwnd, 20 /* DWMWA_USE_IMMERSIVE_DARK_MODE */ , ref trueValue, sizeof(int));
-                // Fallback for older builds
-                DwmSetWindowAttribute(hwnd, 19 /* DWMWA_USE_IMMERSIVE_DARK_MODE (legacy) */ , ref trueValue, sizeof(int));
+                int useDark = forceDark ? 1 : 0;
+                // DWMWA_USE_IMMERSIVE_DARK_MODE (20) for modern builds
+                DwmSetWindowAttribute(hwnd, 20 /* DWMWA_USE_IMMERSIVE_DARK_MODE */ , ref useDark, sizeof(int));
+                // Fallback (19) for older builds
+                DwmSetWindowAttribute(hwnd, 19 /* DWMWA_USE_IMMERSIVE_DARK_MODE (legacy) */ , ref useDark, sizeof(int));
             }
             catch
             {
