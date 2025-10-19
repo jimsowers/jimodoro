@@ -5,7 +5,7 @@ xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
 Icon="Assets/icons/best_tomato_icon.ico"
         Height="400" 
         Width="600"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundBrush}"
@@ -85,80 +85,85 @@ Icon="Assets/icons/best_tomato_icon.ico"
         </Grid.RowDefinitions>
         
         <!-- Timer Display - Much Larger -->
-        <Border Grid.Column="0" Grid.Row="0"
-                Background="{StaticResource SurfaceBrush}"
-                CornerRadius="20"
-                Padding="10"
-                Margin="0,0,5,0">
-            <Border.Effect>
-                <DropShadowEffect Color="#E2E8F0" 
-                                Direction="270" 
-                                ShadowDepth="2" 
-                                BlurRadius="10" 
-                                Opacity="0.3"/>
-            </Border.Effect>
-            
-            <StackPanel VerticalAlignment="Center">
-                <!-- Status Text -->
-                <TextBlock x:Name="StatusText" 
-                          Text="{Binding StateDisplayText, Mode=OneWay}"
-                          Style="{StaticResource StatusTextStyle}"
-                          Margin="0,0,0,5"
-                          Foreground="{StaticResource AccentBrush}"
-                          HorizontalAlignment="Center"/>
+        <Viewbox Grid.Column="0" Grid.Row="0" 
+                 Stretch="Uniform"
+                 Margin="0,0,5,0">
+            <Border Width="400" 
+                    Height="340"
+                    Background="{StaticResource SurfaceBrush}"
+                    CornerRadius="20"
+                    Padding="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#E2E8F0" 
+                                    Direction="270" 
+                                    ShadowDepth="2" 
+                                    BlurRadius="10" 
+                                    Opacity="0.3"/>
+                </Border.Effect>
                 
-                <!-- Timer -->
-                <TextBlock x:Name="TimerDisplay" 
-                          Text="{Binding DisplayTime, Mode=OneWay}"
-                          Style="{StaticResource TimerTextStyle}"
-                          Margin="0,0,0,5"
-                          HorizontalAlignment="Center"/>
-                
-                <!-- Progress Bar -->
-                <ProgressBar x:Name="ProgressBar"
-                           Value="{Binding ProgressPercentage, Mode=OneWay}"
-                           Height="8"
-                           Background="#E5E7EB"
-                           Foreground="{StaticResource AccentBrush}"
-                           BorderThickness="0"
-                           Margin="0,0,0,10">
-                    <ProgressBar.Template>
-                        <ControlTemplate TargetType="ProgressBar">
-                            <Border Background="{TemplateBinding Background}" 
-                                  CornerRadius="4">
-                                <Grid>
-                                    <Rectangle x:Name="PART_Track" 
-                                             Fill="{TemplateBinding Background}"
-                                             RadiusX="4" 
-                                             RadiusY="4"/>
-                                    <Rectangle x:Name="PART_Indicator" 
-                                             Fill="{TemplateBinding Foreground}"
-                                             RadiusX="4" 
-                                             RadiusY="4"
-                                             HorizontalAlignment="Left"/>
-                                </Grid>
-                            </Border>
-                        </ControlTemplate>
-                    </ProgressBar.Template>
-                </ProgressBar>
-                
-                <!-- Completed Pomodoros -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Completed Work Sessions:" 
-                              FontSize="16" 
-                              Foreground="{StaticResource MutedTextBrush}"
-                              VerticalAlignment="Center"/>
-                    <TextBlock x:Name="CompletedCountText" 
-                              Text="{Binding CompletedPomodoros, Mode=OneWay}"
-                              FontSize="20" 
-                              FontWeight="SemiBold"
+                <StackPanel VerticalAlignment="Center">
+                    <!-- Status Text -->
+                    <TextBlock x:Name="StatusText" 
+                              Text="{Binding StateDisplayText, Mode=OneWay}"
+                              Style="{StaticResource StatusTextStyle}"
+                              Margin="0,0,0,5"
                               Foreground="{StaticResource AccentBrush}"
-                              Margin="8,0,0,0"
-                              VerticalAlignment="Center"/>
-                   
+                              HorizontalAlignment="Center"/>
+                    
+                    <!-- Timer -->
+                    <TextBlock x:Name="TimerDisplay" 
+                              Text="{Binding DisplayTime, Mode=OneWay}"
+                              Style="{StaticResource TimerTextStyle}"
+                              Margin="0,0,0,5"
+                              HorizontalAlignment="Center"/>
+                    
+                    <!-- Progress Bar -->
+                    <ProgressBar x:Name="ProgressBar"
+                               Value="{Binding ProgressPercentage, Mode=OneWay}"
+                               Height="8"
+                               Width="350"
+                               Background="#E5E7EB"
+                               Foreground="{StaticResource AccentBrush}"
+                               BorderThickness="0"
+                               Margin="0,0,0,10">
+                        <ProgressBar.Template>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Border Background="{TemplateBinding Background}" 
+                                      CornerRadius="4">
+                                    <Grid>
+                                        <Rectangle x:Name="PART_Track" 
+                                                 Fill="{TemplateBinding Background}"
+                                                 RadiusX="4" 
+                                                 RadiusY="4"/>
+                                        <Rectangle x:Name="PART_Indicator" 
+                                                 Fill="{TemplateBinding Foreground}"
+                                                 RadiusX="4" 
+                                                 RadiusY="4"
+                                                 HorizontalAlignment="Left"/>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </ProgressBar.Template>
+                    </ProgressBar>
+                    
+                    <!-- Completed Pomodoros -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Completed Work Sessions:" 
+                                  FontSize="16" 
+                                  Foreground="{StaticResource MutedTextBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock x:Name="CompletedCountText" 
+                                  Text="{Binding CompletedPomodoros, Mode=OneWay}"
+                                  FontSize="20" 
+                                  FontWeight="SemiBold"
+                                  Foreground="{StaticResource AccentBrush}"
+                                  Margin="8,0,0,0"
+                                  VerticalAlignment="Center"/>
+                       
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Border>
+            </Border>
+        </Viewbox>
         
         <!-- Control Buttons and Settings - Right Side -->
         <StackPanel Grid.Column="1" Grid.Row="0"
