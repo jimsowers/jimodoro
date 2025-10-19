@@ -9,13 +9,13 @@ namespace Jimodoro
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PomodoroTimer _pomodoroTimer = null!;
+        private readonly PomodoroTimer _pomodoroTimer = null!;
 
         public MainWindow()
         {
             try
             {
-                InitializeComponent();
+                // InitializeComponent();
                 
                 _pomodoroTimer = new PomodoroTimer();
                 DataContext = _pomodoroTimer;
