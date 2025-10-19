@@ -170,7 +170,10 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
-                            TextChanged="WorkDurationTextBox_TextChanged"/>
+                            TextChanged="WorkDurationTextBox_TextChanged"
+                            PreviewTextInput="NumericTextBox_PreviewTextInput"
+                            MaxLength="3"
+                            DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="0" Grid.Column="2" 
                               Text="min"
                               VerticalAlignment="Center"
@@ -197,7 +200,10 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
-                            TextChanged="ShortBreakTextBox_TextChanged"/>
+                            TextChanged="ShortBreakTextBox_TextChanged"
+                            PreviewTextInput="NumericTextBox_PreviewTextInput"
+                            MaxLength="3"
+                            DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="1" Grid.Column="2" 
                               Text="min"
                               VerticalAlignment="Center"
@@ -225,7 +231,10 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
-                            TextChanged="LongBreakTextBox_TextChanged"/>
+                            TextChanged="LongBreakTextBox_TextChanged"
+                            PreviewTextInput="NumericTextBox_PreviewTextInput"
+                            MaxLength="3"
+                            DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="2" Grid.Column="2" 
                               Text="min"
                               VerticalAlignment="Center"

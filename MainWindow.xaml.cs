@@ -1,5 +1,8 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Jimodoro
@@ -53,51 +56,108 @@ namespace Jimodoro
             _pomodoroTimer.Skip();
         }
 
-        private void WorkDurationTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        // Prevent non-numeric characters from being entered
+        private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
+            // Allow only digits
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        // Validate paste operations to ensure only valid numeric content is pasted
+        private void NumericTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
             {
-                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 120)
+                string pastedText = (string)e.DataObject.GetData(typeof(string));
+                
+                // Check if the pasted text contains only digits
+                if (!Regex.IsMatch(pastedText, @"^\d+$"))
                 {
-                    _pomodoroTimer.WorkDuration = value;
-                    textBox.Background = new SolidColorBrush(Colors.White);
+                    e.CancelCommand();
+                    return;
                 }
-                else if (!string.IsNullOrEmpty(textBox.Text))
+                
+                // Check if the pasted number is within valid range
+                if (int.TryParse(pastedText, out int value))
                 {
-                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
+                    if (value < 1 || value > 120)
+                    {
+                        e.CancelCommand();
+                    }
                 }
+                else
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
 
-        private void ShortBreakTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        // Validate and ensure values are within safe range (1-120)
+        private bool ValidateAndApplyValue(TextBox textBox, Action<int> setValue)
         {
-            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 60)
+                // Empty field - set light red background
+                textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242));
+                return false;
+            }
+
+            if (int.TryParse(textBox.Text, out int value))
+            {
+                if (value >= 1 && value <= 120)
                 {
-                    _pomodoroTimer.ShortBreakDuration = value;
+                    // Valid value - apply it and set white background
+                    setValue(value);
                     textBox.Background = new SolidColorBrush(Colors.White);
+                    return true;
                 }
-                else if (!string.IsNullOrEmpty(textBox.Text))
+                else if (value < 1)
                 {
-                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
+                    // Value too small - correct it to 1
+                    textBox.Text = "1";
+                    return false; // Will trigger another TextChanged event
                 }
+                else // value > 120
+                {
+                    // Value too large - correct it to 120
+                    textBox.Text = "120";
+                    return false; // Will trigger another TextChanged event
+                }
+            }
+            else
+            {
+                // Invalid number format - set light red background
+                textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242));
+                return false;
             }
         }
 
-        private void LongBreakTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void WorkDurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (_pomodoroTimer != null && sender is System.Windows.Controls.TextBox textBox)
+            if (_pomodoroTimer != null && sender is TextBox textBox)
             {
-                if (int.TryParse(textBox.Text, out int value) && value > 0 && value <= 120)
-                {
-                    _pomodoroTimer.LongBreakDuration = value;
-                    textBox.Background = new SolidColorBrush(Colors.White);
-                }
-                else if (!string.IsNullOrEmpty(textBox.Text))
-                {
-                    textBox.Background = new SolidColorBrush(Color.FromRgb(254, 242, 242)); // Light red for invalid input
-                }
+                ValidateAndApplyValue(textBox, value => _pomodoroTimer.WorkDuration = value);
+            }
+        }
+
+        private void ShortBreakTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_pomodoroTimer != null && sender is TextBox textBox)
+            {
+                ValidateAndApplyValue(textBox, value => _pomodoroTimer.ShortBreakDuration = value);
+            }
+        }
+
+        private void LongBreakTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_pomodoroTimer != null && sender is TextBox textBox)
+            {
+                ValidateAndApplyValue(textBox, value => _pomodoroTimer.LongBreakDuration = value);
             }
         }
 
