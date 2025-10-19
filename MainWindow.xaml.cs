@@ -18,7 +18,7 @@ namespace Jimodoro
         {
             try
             {
-                // InitializeComponent();
+                InitializeComponent();
                 
                 _pomodoroTimer = new PomodoroTimer();
                 DataContext = _pomodoroTimer;
@@ -137,6 +137,16 @@ namespace Jimodoro
             }
         }
 
+        // Restore default value if field is empty when focus is lost
+        private void RestoreDefaultIfEmpty(TextBox textBox, string defaultValue)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = defaultValue;
+                textBox.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+
         private void WorkDurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_pomodoroTimer != null && sender is TextBox textBox)
@@ -158,6 +168,30 @@ namespace Jimodoro
             if (_pomodoroTimer != null && sender is TextBox textBox)
             {
                 ValidateAndApplyValue(textBox, value => _pomodoroTimer.LongBreakDuration = value);
+            }
+        }
+
+        private void WorkDurationTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                RestoreDefaultIfEmpty(textBox, "25");
+            }
+        }
+
+        private void ShortBreakTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                RestoreDefaultIfEmpty(textBox, "5");
+            }
+        }
+
+        private void LongBreakTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                RestoreDefaultIfEmpty(textBox, "15");
             }
         }
 

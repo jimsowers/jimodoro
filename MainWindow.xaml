@@ -171,6 +171,7 @@
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
                             TextChanged="WorkDurationTextBox_TextChanged"
+                            LostFocus="WorkDurationTextBox_LostFocus"
                             PreviewTextInput="NumericTextBox_PreviewTextInput"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
@@ -201,6 +202,7 @@
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
                             TextChanged="ShortBreakTextBox_TextChanged"
+                            LostFocus="ShortBreakTextBox_LostFocus"
                             PreviewTextInput="NumericTextBox_PreviewTextInput"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
@@ -232,6 +234,7 @@
                             VerticalContentAlignment="Center"
                             Style="{StaticResource ModernTextBoxStyle}"
                             TextChanged="LongBreakTextBox_TextChanged"
+                            LostFocus="LongBreakTextBox_LostFocus"
                             PreviewTextInput="NumericTextBox_PreviewTextInput"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
