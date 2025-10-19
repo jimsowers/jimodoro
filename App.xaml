@@ -7,7 +7,7 @@
         <Color x:Key="PrimaryColor">#374151</Color>
         <Color x:Key="SecondaryColor">#6B7280</Color>
         <Color x:Key="AccentColor">#F97316</Color>
-        <Color x:Key="BackgroundColor">#F3F4F6</Color>
+        <Color x:Key="BackgroundColor">#2D2D2D</Color>
         <Color x:Key="SurfaceColor">#FFFFFF</Color>
         <Color x:Key="TextColor">#1F2937</Color>
         <Color x:Key="MutedTextColor">#9CA3AF</Color>

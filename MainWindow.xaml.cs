@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace Jimodoro
 {
@@ -34,6 +36,12 @@ namespace Jimodoro
                 MessageBox.Show($"Error initializing application: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown();
             }
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            TryEnableImmersiveDarkTitleBar();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -241,5 +249,30 @@ namespace Jimodoro
             Topmost = true;
             Topmost = false;
         }
+
+        // Enable Windows 11 dark title bar (immersive dark mode).
+        // Uses DWM attributes: value 20 on 1903+, fallback to 19 for 1809.
+        private void TryEnableImmersiveDarkTitleBar()
+        {
+            try
+            {
+                var hwnd = new WindowInteropHelper(this).Handle;
+                if (hwnd == IntPtr.Zero)
+                    return;
+
+                int trueValue = 1;
+                // Try modern value
+                DwmSetWindowAttribute(hwnd, 20 /* DWMWA_USE_IMMERSIVE_DARK_MODE */ , ref trueValue, sizeof(int));
+                // Fallback for older builds
+                DwmSetWindowAttribute(hwnd, 19 /* DWMWA_USE_IMMERSIVE_DARK_MODE (legacy) */ , ref trueValue, sizeof(int));
+            }
+            catch
+            {
+                // Ignore if not supported on this OS
+            }
+        }
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
     }
 }
