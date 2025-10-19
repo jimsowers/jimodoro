@@ -42,6 +42,7 @@ namespace Jimodoro
         {
             base.OnSourceInitialized(e);
             TryEnableImmersiveDarkTitleBar();
+            TrySetRoundedCorners();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -274,5 +275,25 @@ namespace Jimodoro
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        // Prefer more rounded window corners on Windows 11 while keeping the native title bar.
+        // DWMWA_WINDOW_CORNER_PREFERENCE = 33
+        // DWM_WINDOW_CORNER_PREFERENCE: 0=Default, 1=DoNotRound, 2=Round, 3=RoundSmall
+        private void TrySetRoundedCorners()
+        {
+            try
+            {
+                var hwnd = new WindowInteropHelper(this).Handle;
+                if (hwnd == IntPtr.Zero)
+                    return;
+
+                int round = 2; // Round (more pronounced)
+                DwmSetWindowAttribute(hwnd, 33 /* DWMWA_WINDOW_CORNER_PREFERENCE */, ref round, sizeof(int));
+            }
+            catch
+            {
+                // Ignore if not supported
+            }
+        }
     }
 }
