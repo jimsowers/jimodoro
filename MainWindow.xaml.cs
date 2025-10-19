@@ -195,18 +195,18 @@ namespace Jimodoro
             }
         }
 
-        private void OnTimerCompleted(object? sender, EventArgs e)
+        private void OnTimerCompleted(object? sender, TimerCompletedEventArgs e)
         {
             // Flash the window to get user's attention
             FlashWindow();
             
             // Show notification message
-            var state = _pomodoroTimer.CurrentState;
+            var state = e.CompletedState;
             var message = state switch
             {
-                TimerState.Work => "Focus session completed! Time for a break. 🎉",
-                TimerState.ShortBreak => "Break time over! Ready to focus again? 💪",
-                TimerState.LongBreak => "Long break finished! Let's get back to work! 🚀",
+                TimerState.Work => "Focus session completed! Time for a break.",
+                TimerState.ShortBreak => "Break time over! Ready to focus again?",
+                TimerState.LongBreak => "Long break finished! Let's get back to work!",
                 _ => "Timer completed!"
             };
             

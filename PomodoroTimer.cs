@@ -5,6 +5,18 @@ using System.Windows.Threading;
 
 namespace Jimodoro
 {
+    public sealed class TimerCompletedEventArgs : EventArgs
+    {
+        public TimerState CompletedState { get; }
+        public TimerState NextState { get; }
+
+        public TimerCompletedEventArgs(TimerState completedState, TimerState nextState)
+        {
+            CompletedState = completedState;
+            NextState = nextState;
+        }
+    }
+
     public enum TimerState
     {
         Work,
@@ -28,7 +40,7 @@ namespace Jimodoro
         public int PomodorosUntilLongBreak { get; set; } = 4;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public event EventHandler? TimerCompleted;
+        public event EventHandler<TimerCompletedEventArgs>? TimerCompleted;
 
         public PomodoroTimer()
         {
@@ -93,10 +105,10 @@ namespace Jimodoro
             {
                 return _currentState switch
                 {
-                    TimerState.Work => "Focus Time",
+                    TimerState.Work => "Getting It done!",
                     TimerState.ShortBreak => "Short Break",
                     TimerState.LongBreak => "Long Break",
-                    TimerState.Stopped => "Ready to Focus",
+                    TimerState.Stopped => "Let's Go!",
                     _ => "Unknown"
                 };
             }
@@ -189,15 +201,17 @@ namespace Jimodoro
         {
             _timer.Stop();
             IsRunning = false;
+            var completedState = _currentState;
             
             // Play completion sound
             PlayCompletionSound();
             
             // Transition to next state
             TransitionToNextState();
+            var nextState = _currentState;
             
             // Notify completion
-            TimerCompleted?.Invoke(this, EventArgs.Empty);
+            TimerCompleted?.Invoke(this, new TimerCompletedEventArgs(completedState, nextState));
         }
 
         private void TransitionToNextState()
