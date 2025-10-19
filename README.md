@@ -22,9 +22,9 @@ A beautiful, modern desktop Pomodoro timer application built with C# and WPF for
 - Window activation for visibility
 
 ⚙️ **Configurable Settings**
-- Adjustable work duration (15-60 minutes)
-- Customizable short break (3-15 minutes)
-- Configurable long break (10-30 minutes)
+- Adjustable work duration (1-120 minutes) - default 25
+- Customizable short break (1-120 minutes) - default 5
+- Configurable long break (1-120 minutes) - default 15
 - Settings persist during session
 
 📊 **Progress Tracking**
@@ -100,3 +100,4 @@ Feel free to submit issues and enhancement requests!
 
 This project is open source and available under the [MIT License](LICENSE).
 >>>>>>> master
+
