@@ -1,7 +1,7 @@
-<Application x:Class="Jimodoro.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+<Application x:Class="ThniksTimer.App"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Modern grey color palette with orange accents -->
         <Color x:Key="PrimaryColor">#374151</Color>

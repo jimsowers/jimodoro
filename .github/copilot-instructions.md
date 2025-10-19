@@ -1,4 +1,4 @@
-# Jimodoro - C# WPF Pomodoro Timer Application
+# ThniksTimer - C# WPF Pomodoro Timer Application
 
 This is a modern desktop Pomodoro timer application built with C# and WPF for Windows.
 
@@ -8,7 +8,7 @@ This is a modern desktop Pomodoro timer application built with C# and WPF for Wi
 - **PomodoroTimer.cs** - Core timer logic and state management
 - **App.xaml** - Application resources and styling
 - **App.xaml.cs** - Application startup logic
-- **Jimodoro.csproj** - Project configuration
+- **ThniksTimer.csproj** - Project configuration
 
 ## Features
 - 25-minute work timer with 5-minute break timer (configurable)

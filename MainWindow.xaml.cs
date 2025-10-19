@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace Jimodoro
+namespace ThniksTimer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -219,7 +219,7 @@ namespace Jimodoro
                 _ => "Timer completed!"
             };
             
-            MessageBox.Show(message, "Jimodoro", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(message, "ThniksTimer", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void FlashWindow()

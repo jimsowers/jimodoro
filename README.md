@@ -1,4 +1,4 @@
-# Jimodoro - Modern Pomodoro Timer
+# ThniksTimer - Modern Pomodoro Timer
 
 A beautiful, modern desktop Pomodoro timer application built with C# and WPF for Windows.
 
