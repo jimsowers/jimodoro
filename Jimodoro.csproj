@@ -9,11 +9,11 @@
     <AssemblyDescription>Modern Pomodoro Timer for Windows</AssemblyDescription>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <ApplicationIcon>.github\Assets\icons\best_tomato_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\icons\best_tomato_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include=".github\Assets\icons\best_tomato_icon.ico" />
+    <Resource Include="Assets\icons\best_tomato_icon.ico" />
   </ItemGroup>
 
 </Project>
