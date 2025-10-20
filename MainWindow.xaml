@@ -268,13 +268,14 @@ Icon="Assets/icons/best_tomato_icon.ico"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Margin="5,0,5,0"
-                   Width="150">
+                   Width="115">
             
             <!-- Control Buttons -->
             <Button x:Name="StartPauseButton" 
                    Content="{Binding PlayPauseText, Mode=OneWay}"
                    Style="{StaticResource CompactButtonStyle}"
                    Click="StartPauseButton_Click"
+                   Width="100"
                    Height="38"
                    Margin="0,0,0,10"/>
             
@@ -282,6 +283,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                    Content="Stop"
                    Style="{StaticResource CompactButtonStyle}"
                    Click="StopButton_Click"
+                   Width="100"
                    Height="38"
                    Margin="0,0,0,10">
                 <Button.Background>
@@ -293,6 +295,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                    Content="Skip"
                    Style="{StaticResource CompactButtonStyle}"
                    Click="SkipButton_Click"
+                   Width="100"
                    Height="38"
                    Margin="0,0,0,15">
                 <Button.Background>
