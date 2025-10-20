@@ -88,13 +88,19 @@ Icon="Assets/icons/best_tomato_icon.ico"
         <Viewbox Grid.Column="0" Grid.Row="0" 
                  Stretch="Uniform"
                  Margin="0,0,5,0">
-            <Border Width="400" 
+            <Border x:Name="TimerBorder"
+                    Width="400" 
                     Height="340"
                     Background="{StaticResource SurfaceBrush}"
                     CornerRadius="20"
-                    Padding="10">
+                    Padding="10"
+                    RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <ScaleTransform x:Name="TimerScaleTransform" ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
                 <Border.Effect>
-                    <DropShadowEffect Color="#E2E8F0" 
+                    <DropShadowEffect x:Name="TimerShadow"
+                                    Color="#E2E8F0" 
                                     Direction="270" 
                                     ShadowDepth="2" 
                                     BlurRadius="10" 
@@ -164,6 +170,112 @@ Icon="Assets/icons/best_tomato_icon.ico"
                 </StackPanel>
             </Border>
         </Viewbox>
+        
+        <!-- Celebration Overlay -->
+        <Grid x:Name="CelebrationOverlay" 
+              Grid.Column="0" Grid.Row="0"
+              Visibility="Collapsed"
+              Background="#CC000000"
+              Opacity="0"
+              MouseDown="CelebrationOverlay_MouseDown">
+            
+            <!-- Confetti Canvas -->
+            <Canvas x:Name="ConfettiCanvas" 
+                    ClipToBounds="True"
+                    IsHitTestVisible="False"/>
+            
+            <Border Background="{StaticResource SurfaceBrush}"
+                    CornerRadius="20"
+                    Padding="40"
+                    MaxWidth="450"
+                    MaxHeight="300"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <ScaleTransform x:Name="CelebrationScaleTransform" ScaleX="0.8" ScaleY="0.8"/>
+                </Border.RenderTransform>
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" 
+                                    Direction="270" 
+                                    ShadowDepth="4" 
+                                    BlurRadius="20" 
+                                    Opacity="0.5"/>
+                </Border.Effect>
+                
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Celebration Icon (using Path instead of emoji) -->
+                    <Viewbox Width="80" Height="80" 
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20">
+                        <Canvas Width="100" Height="100"
+                                RenderTransformOrigin="0.5,0.5">
+                            <Canvas.RenderTransform>
+                                <RotateTransform x:Name="EmojiRotateTransform" Angle="0"/>
+                            </Canvas.RenderTransform>
+                            <!-- Celebration Star Burst -->
+                            <Path Data="M50,10 L55,40 L85,45 L60,60 L70,90 L50,75 L30,90 L40,60 L15,45 L45,40 Z" 
+                                  Fill="{StaticResource AccentBrush}"
+                                  Stroke="{StaticResource AccentBrush}"
+                                  StrokeThickness="2"/>
+                            <!-- Center Circle -->
+                            <Ellipse Width="30" Height="30" 
+                                     Canvas.Left="35" Canvas.Top="35"
+                                     Fill="#FFD700"
+                                     Stroke="#FFA500"
+                                     StrokeThickness="2"/>
+                            <!-- Sparkles -->
+                            <Path Data="M20,20 L22,25 L17,25 Z M80,25 L82,30 L77,30 Z M75,75 L77,80 L72,80 Z M25,80 L27,85 L22,85 Z" 
+                                  Fill="#FFD700"/>
+                        </Canvas>
+                    </Viewbox>
+                    
+                    <!-- Celebration Message -->
+                    <TextBlock x:Name="CelebrationMessage"
+                              Text="Work Session Complete!"
+                              FontSize="28"
+                              FontWeight="SemiBold"
+                              Foreground="{StaticResource AccentBrush}"
+                              HorizontalAlignment="Center"
+                              Margin="0,0,0,10"/>
+                    
+                    <!-- Celebration Sub-message -->
+                    <TextBlock x:Name="CelebrationSubMessage"
+                              Text="Great job! Time for a break."
+                              FontSize="16"
+                              Foreground="{StaticResource MutedTextBrush}"
+                              HorizontalAlignment="Center"
+                              Margin="0,0,0,20"/>
+                    
+                    <!-- Auto-start countdown -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Starting next phase in "
+                                  FontSize="14"
+                                  Foreground="{StaticResource MutedTextBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock x:Name="CountdownText"
+                                  Text="15"
+                                  FontSize="18"
+                                  FontWeight="SemiBold"
+                                  Foreground="{StaticResource AccentBrush}"
+                                  Margin="5,0"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="seconds..."
+                                  FontSize="14"
+                                  Foreground="{StaticResource MutedTextBrush}"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <!-- Dismiss hint -->
+                    <TextBlock Text="(Click anywhere to dismiss)"
+                              FontSize="12"
+                              Foreground="{StaticResource MutedTextBrush}"
+                              HorizontalAlignment="Center"
+                              Margin="0,15,0,0"
+                              Opacity="0.6"/>
+                </StackPanel>
+            </Border>
+        </Grid>
         
         <!-- Control Buttons and Settings - Right Side -->
         <StackPanel Grid.Column="1" Grid.Row="0"
