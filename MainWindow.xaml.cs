@@ -461,21 +461,7 @@ namespace ThniksTimer
             Storyboard.SetTargetProperty(pulseAnimationY, new PropertyPath("ScaleY"));
             storyboard.Children.Add(pulseAnimationY);
 
-            // 4. Celebrate emoji rotation
-            var rotateEmoji = new DoubleAnimation
-            {
-                From = -10,
-                To = 10,
-                Duration = TimeSpan.FromMilliseconds(800),
-                AutoReverse = true,
-                RepeatBehavior = new RepeatBehavior(2),
-                EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
-            };
-            Storyboard.SetTarget(rotateEmoji, EmojiRotateTransform);
-            Storyboard.SetTargetProperty(rotateEmoji, new PropertyPath("Angle"));
-            storyboard.Children.Add(rotateEmoji);
-
-            // 5. Enhanced glow effect on timer border
+            // 4. Enhanced glow effect on timer border
             var glowAnimation = new ColorAnimation
             {
                 From = Color.FromRgb(226, 232, 240), // Light gray
