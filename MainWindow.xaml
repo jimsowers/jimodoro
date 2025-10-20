@@ -130,6 +130,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                     <TextBlock x:Name="TimerDisplay" 
                               Text="{Binding DisplayTime, Mode=OneWay}"
                               Style="{StaticResource TimerTextStyle}"
+                              FontWeight="SemiBold"
                               Margin="0,0,0,5"
                               HorizontalAlignment="Center"/>
                     
