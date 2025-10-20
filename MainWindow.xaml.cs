@@ -400,7 +400,7 @@ namespace ThniksTimer
             // Set celebration message based on completed state
             var (message, subMessage) = completedState switch
             {
-                TimerState.Work => ("Work Session Complete! ??", "Great focus! Time for a well-deserved break."),
+                TimerState.Work => ("Work Session Complete!", "Great focus! Time for a well-deserved break."),
                 TimerState.ShortBreak => ("Break Complete!", "Feeling refreshed? Let's get back to work!"),
                 TimerState.LongBreak => ("Long Break Complete!", "Recharged and ready to conquer more!"),
                 _ => ("Timer Complete!", "Ready for the next session?")

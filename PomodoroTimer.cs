@@ -108,11 +108,11 @@ namespace ThniksTimer
             {
                 return _currentState switch
                 {
-                    TimerState.Work => "Getting It done!",
-                    TimerState.ShortBreak => "Short Break",
-                    TimerState.LongBreak => "Long Break",
-                    TimerState.Stopped => "Let's Go!",
-                    _ => "Unknown"
+                    TimerState.Work => "",
+                    TimerState.ShortBreak => "",
+                    TimerState.LongBreak => "",
+                    TimerState.Stopped => "",
+                    _ => ""
                 };
             }
         }
