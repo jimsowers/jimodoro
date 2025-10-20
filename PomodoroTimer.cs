@@ -32,6 +32,7 @@ namespace ThniksTimer
         private TimerState _currentState;
         private bool _isRunning;
         private int _completedPomodoros;
+        private bool _wasSkipped;
         
         // Configurable durations (in minutes)
         public int WorkDuration { get; set; } = 25;
@@ -96,6 +97,8 @@ namespace ThniksTimer
                 OnPropertyChanged(nameof(CompletedPomodoros));
             }
         }
+
+        public bool WasSkipped => _wasSkipped;
 
         public string DisplayTime => _timeRemaining.ToString(@"mm\:ss");
 
@@ -162,6 +165,7 @@ namespace ThniksTimer
                 StartWorkSession();
             }
             
+            _wasSkipped = false; // Clear skip flag when explicitly starting
             IsRunning = true;
             _timer.Start();
         }
@@ -182,6 +186,7 @@ namespace ThniksTimer
 
         public void Skip()
         {
+            _wasSkipped = true;
             CompleteCurrentSession();
         }
 
@@ -193,6 +198,7 @@ namespace ThniksTimer
             }
             else
             {
+                _wasSkipped = false; // Timer naturally completed
                 CompleteCurrentSession();
             }
         }

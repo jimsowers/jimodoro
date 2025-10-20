@@ -255,7 +255,12 @@ namespace ThniksTimer
             _celebrationCountdownTimer?.Stop();
             StopConfetti();
             HideCelebrationAnimation();
-            _pomodoroTimer.Start(); // Auto-start next phase
+            
+            // Only auto-start if the session was not skipped
+            if (!_pomodoroTimer.WasSkipped)
+            {
+                _pomodoroTimer.Start();
+            }
         }
 
         private void StartConfetti()
@@ -514,7 +519,12 @@ namespace ThniksTimer
                 {
                     _celebrationCountdownTimer?.Stop();
                     HideCelebrationAnimation();
-                    _pomodoroTimer.Start(); // Auto-start next phase
+                    
+                    // Only auto-start if the session was not skipped
+                    if (!_pomodoroTimer.WasSkipped)
+                    {
+                        _pomodoroTimer.Start();
+                    }
                 }
             };
             _celebrationCountdownTimer.Start();
