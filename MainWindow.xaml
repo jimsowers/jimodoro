@@ -294,7 +294,8 @@ Icon="Assets/icons/best_tomato_icon.ico"
             <Expander Header="Settings" 
                      FontWeight="SemiBold"
                      Foreground="{StaticResource TextBrush}"
-                     HorizontalAlignment="Stretch">
+                     HorizontalAlignment="Stretch"
+                     ToolTip="Change Time Settings">
                 <Grid Margin="0,15,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
