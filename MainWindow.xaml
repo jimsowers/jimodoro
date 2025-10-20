@@ -204,32 +204,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                 </Border.Effect>
                 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!-- Celebration Icon (using Path instead of emoji) -->
-                    <!--<Viewbox Width="80" Height="80" 
-                             HorizontalAlignment="Center"
-                             Margin="0,0,0,20">
-                        <Canvas Width="100" Height="100"
-                                RenderTransformOrigin="0.5,0.5">
-                            <Canvas.RenderTransform>
-                                <RotateTransform x:Name="EmojiRotateTransform" Angle="0"/>
-                            </Canvas.RenderTransform>
-                            --><!-- Celebration Star Burst --><!--
-                            <Path Data="M50,10 L55,40 L85,45 L60,60 L70,90 L50,75 L30,90 L40,60 L15,45 L45,40 Z" 
-                                  Fill="{StaticResource AccentBrush}"
-                                  Stroke="{StaticResource AccentBrush}"
-                                  StrokeThickness="2"/>
-                            --><!-- Center Circle --><!--
-                            <Ellipse Width="30" Height="30" 
-                                     Canvas.Left="35" Canvas.Top="35"
-                                     Fill="#FFD700"
-                                     Stroke="#FFA500"
-                                     StrokeThickness="2"/>
-                            --><!-- Sparkles --><!--
-                            <Path Data="M20,20 L22,25 L17,25 Z M80,25 L82,30 L77,30 Z M75,75 L77,80 L72,80 Z M25,80 L27,85 L22,85 Z" 
-                                  Fill="#FFD700"/>
-                        </Canvas>
-                    </Viewbox>-->
-                    
+          
                     <!-- Celebration Message -->
                     <TextBlock x:Name="CelebrationMessage"
                               Text="Work Session Complete!"
@@ -356,7 +331,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="0" Grid.Column="2" 
-                              Text="min"
+                              Text="Work"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               FontSize="10"
@@ -387,7 +362,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="1" Grid.Column="2" 
-                              Text="min"
+                              Text="Short&#x0a;Rest"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               FontSize="10"
@@ -419,7 +394,7 @@ Icon="Assets/icons/best_tomato_icon.ico"
                             MaxLength="3"
                             DataObject.Pasting="NumericTextBox_Pasting"/>
                     <TextBlock Grid.Row="2" Grid.Column="2" 
-                              Text="min"
+                              Text="Long&#x0a;Rest"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               FontSize="10"
